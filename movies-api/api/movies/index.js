@@ -17,6 +17,10 @@ import {
     getNowPlayingMovies
   } from '../tmdb-api';
 
+import {
+    getMovieDetails
+  } from '../tmdb-api';  
+
 const router = express.Router();
 
 router.get('/', asyncHandler(async (req, res) => {
@@ -76,6 +80,15 @@ router.get('/tmdb/now_playing', asyncHandler(async (req, res) => {
     res.status(200).json(nowPlayingMovies);
 }));
 
+router.get('/movies/:id', async (req, res) => {
+    const id = req.params.id; // Extract the dynamic parameter
+    try {
+        const movieDetails = await getMovieDetails(id);
+        res.json(movieDetails);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 export default router;
