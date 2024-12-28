@@ -19,17 +19,28 @@ import {
 
 import {
     getMovieDetails
-  } from '../tmdb-api';  
+  } from '../tmdb-api'; 
+  
+import {
+    getMovies
+  } from '../tmdb-api'; 
 
 const router = express.Router();
 
-router.get('/', asyncHandler(async (req, res) => {
-    const movies = await movieModel.find();
-    res.status(200).json(movies);
-}));
 
 // Get movie details
 router.get('/:id', asyncHandler(async (req, res) => {
+    const id = parseInt(req.params.id);
+    const movie = await movieModel.findByMovieDBId(id);
+    if (movie) {
+        res.status(200).json(movie);
+    } else {
+        res.status(404).json({message: 'The movie you requested could not be found.', status_code: 404});
+    }
+}));
+
+// Get movie details
+router.get('/tmdb/discover/:id', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const movie = await movieModel.findByMovieDBId(id);
     if (movie) {
@@ -60,6 +71,12 @@ router.get('/', asyncHandler(async (req, res) => {
     res.status(200).json(returnObject);
 }));
 
+router.get('', asyncHandler(async (req, res) => {
+    const movies = await getMovies();
+    res.status(200).json(movies);
+}));
+
+
 router.get('/tmdb/genres', asyncHandler(async (req, res) => {
     const genres = await getGenres();
     res.status(200).json(genres);
@@ -80,7 +97,12 @@ router.get('/tmdb/now_playing', asyncHandler(async (req, res) => {
     res.status(200).json(nowPlayingMovies);
 }));
 
-router.get('/movies/:id', async (req, res) => {
+router.get('/tmdb/discover', asyncHandler(async (req, res) => {
+    const movies = await getMovies();
+    res.status(200).json(movies);
+}));
+
+router.get('/tmbd/discover/:id', async (req, res) => {
     const id = req.params.id; // Extract the dynamic parameter
     try {
         const movieDetails = await getMovieDetails(id);

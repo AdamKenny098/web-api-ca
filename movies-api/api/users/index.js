@@ -12,9 +12,6 @@ router.get('/', async (req, res) => {
 });
 
 // register(Create)/Authenticate User
-//.... code as before
-
-// register(Create)/Authenticate User
 router.post('/', asyncHandler(async (req, res) => {
     try {
         if (!req.body.username || !req.body.password) {
@@ -31,9 +28,6 @@ router.post('/', asyncHandler(async (req, res) => {
         res.status(500).json({ success: false, msg: 'Internal server error.' });
     }
 }));
-
-// ... Code as before
-
 
 // Update a user
 router.put('/:id', async (req, res) => {
