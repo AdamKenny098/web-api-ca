@@ -9,15 +9,39 @@ export const getMovies = async () => {
   return response.json();
 };
 
-export const getPopularMovies = async () => {
+export const getNowPlayingMovies = async () => {
     const response = await fetch(
-        'http://localhost:8080/api/movies/tmdb/popular', {
+        'http://localhost:8080/api/movies/tmdb/now_playing', {
         headers: {
           'Authorization': window.localStorage.getItem('token')
         }
       }
     )
     return response.json();
+}
+
+
+export const getUpcomingMovies = async () => {
+  const response = await fetch(
+      'http://localhost:8080/api/movies/tmdb/upcoming', {
+      headers: {
+        'Authorization': window.localStorage.getItem('token')
+      }
+    }
+  )
+  return response.json();
+}
+
+
+export const getPopularMovies = async () => {
+  const response = await fetch(
+      'http://localhost:8080/api/movies/tmdb/popular', {
+      headers: {
+        'Authorization': window.localStorage.getItem('token')
+      }
+    }
+  )
+  return response.json();
 }
 
   export const login = async (username, password) => {

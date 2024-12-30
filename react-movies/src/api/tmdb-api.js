@@ -89,7 +89,7 @@ export const getMovie = (args) => {
 
   export const getUpcomingMovies = ({ queryKey }) => {
     return fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}`
+      `${process.env.REACT_APP_BACKEND_URL}/tmdb/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}`
     ).then( (response) => {
       if (!response.ok) {
         return response.json().then((error) => {
